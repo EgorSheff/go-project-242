@@ -39,7 +39,7 @@ func main() {
 			if err != nil {
 				return err
 			}
-			fmt.Println(size)
+			fmt.Printf("%s\t%s\n", size, cmd.Args().First())
 			return nil
 		},
 	}

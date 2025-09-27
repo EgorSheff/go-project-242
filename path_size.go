@@ -5,6 +5,7 @@ import (
 	"math"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
@@ -19,7 +20,7 @@ func GetPathSize(path string, recursive, human, all bool) (string, error) {
 	}
 	fSize := FormatSize(size, human)
 
-	return fmt.Sprintf("%s\t%s", fSize, path), nil
+	return fSize, nil
 }
 
 func GetSize(path string, all, recursive bool) (int64, error) {
@@ -76,6 +77,6 @@ func FormatSize(size int64, human bool) string {
 			break
 		}
 	}
-	s := float64(size) / math.Pow(2, 10*float64(baseIdx))
-	return fmt.Sprintf("%.1f%s", s, units[baseIdx])
+	s := strings.TrimSuffix(strconv.FormatFloat(float64(size)/math.Pow(2, 10*float64(baseIdx)), 'f', 1, 64), ".0")
+	return s + units[baseIdx]
 }
