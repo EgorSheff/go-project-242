@@ -5,7 +5,6 @@ import (
 	"math"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 )
 
@@ -77,6 +76,6 @@ func FormatSize(size int64, human bool) string {
 			break
 		}
 	}
-	s := strings.TrimSuffix(strconv.FormatFloat(float64(size)/math.Pow(2, 10*float64(baseIdx)), 'f', 1, 64), ".0")
-	return s + units[baseIdx]
+	s := float64(size) / math.Pow(2, 10*float64(baseIdx))
+	return fmt.Sprintf("%.1f%s", s, units[baseIdx])
 }
