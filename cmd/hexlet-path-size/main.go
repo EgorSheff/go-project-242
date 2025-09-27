@@ -35,13 +35,11 @@ func main() {
 			},
 		},
 		Action: func(ctx context.Context, cmd *cli.Command) error {
-			size, err := code.GetSize(cmd.Args().First(), cmd.Bool("all"), cmd.Bool("recursive"))
+			size, err := code.GetPathSize(cmd.Args().First(), cmd.Bool("recursive"), cmd.Bool("human"), cmd.Bool("all"))
 			if err != nil {
 				return err
 			}
-			fSize := code.FormatSize(size, cmd.Bool("human"))
-
-			fmt.Printf("%s\t%s\n", fSize, cmd.Args().First())
+			fmt.Println(size)
 			return nil
 		},
 	}
