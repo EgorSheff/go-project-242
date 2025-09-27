@@ -7,7 +7,7 @@ import (
 )
 
 func TestGetPathSizeFile(t *testing.T) {
-	size, err := GetSize("testdata/sample.txt", false)
+	size, err := GetSize("testdata/sample.txt", false, false)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -15,17 +15,25 @@ func TestGetPathSizeFile(t *testing.T) {
 }
 
 func TestGetPathSizeDir(t *testing.T) {
-	size, err := GetSize("testdata", false)
+	size, err := GetSize("testdata", false, false)
 	if err != nil {
 		t.Fatal(err)
 	}
 	require.Equal(t, int64(1064960), size, "not hidden files")
 
-	size, err = GetSize("testdata", true)
+	size, err = GetSize("testdata", true, false)
 	if err != nil {
 		t.Fatal(err)
 	}
 	require.Equal(t, int64(3194880), size, "hidden files")
+}
+
+func TestGetPathSizeRecursive(t *testing.T) {
+	size, err := GetSize("testdata", true, true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	require.Equal(t, int64(3201120), size)
 }
 
 func TestFormat(t *testing.T) {

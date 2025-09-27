@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -11,7 +12,7 @@ var (
 	units = []string{"B", "KB", "MB", "GB", "TB", "PB", "EB"}
 )
 
-func GetSize(path string, all bool) (int64, error) {
+func GetSize(path string, all, recursive bool) (int64, error) {
 	info, err := os.Lstat(path)
 	if err != nil {
 		return 0, err
@@ -33,6 +34,13 @@ func GetSize(path string, all bool) (int64, error) {
 		}
 
 		if entry.IsDir() {
+			if recursive {
+				s, err := GetSize(filepath.Join(path, entry.Name()), all, recursive)
+				if err != nil {
+					return 0, err
+				}
+				size += s
+			}
 			continue
 		}
 
