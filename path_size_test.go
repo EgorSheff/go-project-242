@@ -21,3 +21,14 @@ func TestGetPathSizeDir(t *testing.T) {
 	}
 	require.Equal(t, int64(3194880), size)
 }
+
+func TestFormat(t *testing.T) {
+	testSet := map[string]int64{
+		"3.0MB":  3194880,
+		"30.1MB": 31581223,
+		"2.9GB":  3158391223,
+	}
+	for expected, size := range testSet {
+		require.Equal(t, expected, FormatSize(size, true))
+	}
+}

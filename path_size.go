@@ -1,6 +1,14 @@
 package code
 
-import "os"
+import (
+	"fmt"
+	"math"
+	"os"
+)
+
+var (
+	units = []string{"B", "KB", "MB", "GB", "TB", "PB", "EB"}
+)
 
 func GetSize(path string) (int64, error) {
 	info, err := os.Lstat(path)
@@ -30,4 +38,21 @@ func GetSize(path string) (int64, error) {
 		size += i.Size()
 	}
 	return size, nil
+}
+
+func FormatSize(size int64, human bool) string {
+	if !human {
+		return fmt.Sprintf("%dB", size)
+	}
+
+	var baseIdx int
+	for i := range units {
+		base := math.Pow(2, 10*float64(i))
+		if size < int64(base) {
+			baseIdx = i - 1
+			break
+		}
+	}
+	s := float64(size) / math.Pow(2, 10*float64(baseIdx))
+	return fmt.Sprintf("%.1f%s", s, units[baseIdx])
 }
