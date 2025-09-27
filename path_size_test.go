@@ -1,7 +1,6 @@
 package code
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -35,10 +34,6 @@ func TestGetPathSizeRecursive(t *testing.T) {
 		t.Fatal(err)
 	}
 	require.Equal(t, int64(3201120), size)
-}
-
-func TestFormatShit(t *testing.T) {
-	fmt.Println(FormatSize(5, true))
 }
 
 func TestFormat(t *testing.T) {
