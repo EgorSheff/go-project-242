@@ -76,6 +76,9 @@ func FormatSize(size int64, human bool) string {
 			break
 		}
 	}
+	if baseIdx == 0 {
+		return fmt.Sprintf("%dB", size)
+	}
 	s := float64(size) / math.Pow(2, 10*float64(baseIdx))
 	return fmt.Sprintf("%.1f%s", s, units[baseIdx])
 }
