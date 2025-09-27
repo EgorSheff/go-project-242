@@ -1,7 +1,7 @@
 BIN_PATH = bin/hexlet-path-size
 
 build:
-	go build -o $(BIN_PATH) ./cmd/hexlet-path-size
+	go build -ldflags="-w -s" -gcflags=all="-l -B" -o $(BIN_PATH) ./cmd/hexlet-path-size
 
 lint:
 	golangci-lint run ./...
