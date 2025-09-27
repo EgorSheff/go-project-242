@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"strings"
 )
 
 var (
 	units = []string{"B", "KB", "MB", "GB", "TB", "PB", "EB"}
 )
 
-func GetSize(path string) (int64, error) {
+func GetSize(path string, all bool) (int64, error) {
 	info, err := os.Lstat(path)
 	if err != nil {
 		return 0, err
@@ -27,6 +28,10 @@ func GetSize(path string) (int64, error) {
 	}
 
 	for _, entry := range entries {
+		if strings.HasPrefix(entry.Name(), ".") && !all {
+			continue
+		}
+
 		if entry.IsDir() {
 			continue
 		}
